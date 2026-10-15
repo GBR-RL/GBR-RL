@@ -24,6 +24,7 @@ repository.
 |---|---|---|---|
 | [vlm-inspect](https://github.com/GBR-RL/vlm-inspect) | Inspection service comparing an open vision-language model with a trained YOLO detector: FastAPI, PostgreSQL + pgvector, MLflow, Kubernetes | YOLO: 0.95 AUROC at 0.07 s per part. Qwen3-VL: 0.88 with no defect labels at all | the VLM triages new defect types while labels are collected; the detector runs inline |
 | [takt-vision](https://github.com/GBR-RL/takt-vision) | C++20 inference runtime: lock-free stages, ONNX Runtime, ByteTrack, no allocations per frame | p99 latency of 74 ms with a camera faster than the model, against 4 s for a plain queue | keep the newest frame and drop the rest: bounded latency matters more than raw speed |
+| [edgeproof](https://github.com/GBR-RL/edgeproof) | Deployment of YOLO defect detectors: INT8 and BF16 on ONNX Runtime and OpenVINO, TensorRT with QAT, x86 and ARM64, a C++ runner, a CI performance gate | 5.5× faster than PyTorch on a Xeon CPU (31 ms) at the exported model's mAP50; 1.2 ms per image with TensorRT FP16 on an H100 | quantize the network but decode the boxes in float: INT8 then works on every runtime |
 | [posegrasp](https://github.com/GBR-RL/posegrasp) | 6-DoF pose estimation to grasp planning, ROS 2 + MoveIt 2 nodes, physics check in MuJoCo | 69% grasp success from estimated poses on the BOP LM-O benchmark (58% with zero-shot detections) | plan the grasp for the pose error: +12 to 20 points of success |
 | [drivecast](https://github.com/GBR-RL/drivecast) | Data and MLOps pipeline over 744M rows: Parquet lake, MLflow registry, champion/challenger gate, API on Kubernetes, weekly retraining | 3.5× the average precision of the vendor's own SMART rule, better in 45 of 45 quarters | retrain on data drift: better than a yearly schedule at the same cost |
 | [spec-review](https://github.com/GBR-RL/spec-review) | Requirements reviewer as a GitHub Action and CLI: INCOSE rules, LoRA-tuned 0.6B model, ReqIF, trace graph in Neo4j | 0.69 macro-F1 classifying requirements of unseen projects, against 0.53 for TF-IDF | rule checks run on every pull request; the LLM proposes the rewrites |
@@ -38,6 +39,7 @@ Blender renders, with Grad-CAM and a FastAPI service.
 ## Toolbox
 
 - **Vision and 3D:** PyTorch, OpenCV, YOLO, U-Net, ConvNeXt, Open3D, point cloud registration (PPF, FPFH, ICP), Blender for synthetic data
+- **Edge deployment:** ONNX Runtime, OpenVINO, TensorRT, INT8 quantization (PTQ, QAT), ARM64
 - **Robotics:** ROS 2, MoveIt 2, MuJoCo
 - **Models and LLMs:** scikit-learn, LightGBM, LoRA, llama.cpp, retrieval (BM25, Qdrant, pgvector), LangGraph, MCP
 - **Data and MLOps:** DuckDB, Spark, MLflow, ClearML, Docker, Kubernetes, FastAPI, PostgreSQL, GitHub Actions, Azure DevOps
